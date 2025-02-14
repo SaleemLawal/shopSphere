@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 export const registerUser = async (req, res, next) => {
   try {
     const newUser = await User.create(req.body);
-    res.status(201).json({
+    return res.status(201).json({
       status: "success",
       message: "User registered successfully",
       data: { user: newUser },
@@ -47,7 +47,7 @@ export const loginUser = async (req, res, next) => {
     const userWithoutPassword = user.toObject();
     delete userWithoutPassword.password;
 
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       message: "Logged in successfully",
       token,
@@ -65,7 +65,7 @@ export const getUserProfile = async (req, res, next) => {
     if (!user) {
       return handleError(res, 404, "User not found");
     }
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       message: "User profile fetched successfully",
       data: { user },
@@ -83,7 +83,7 @@ export const updateUserProfile = async (req, res, next) => {
       new: true,
       runValidators: true,
     });
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       message: "User profile updated successfully",
       data: { user },
@@ -98,7 +98,7 @@ export const getAllUsers = async (req, res, next) => {
   // assumming user is admin due to the middleware applied
   try {
     const users = await User.find().sort({ createdAt: -1 });
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       results: users.length,
       message: "Users fetched successfully",
@@ -115,7 +115,7 @@ export const getUserById = async (req, res, next) => {
     if (!user) {
       return handleError(res, 404, "User not found");
     }
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       message: "User fetched successfully",
       data: { user },
@@ -135,7 +135,7 @@ export const updateUser = async (req, res, next) => {
     if (!user) {
       handleError(res, 404, "User not found");
     }
-    res.status(200).json({
+    return res.status(200).json({
       status: "success",
       message: "User updated successfully",
       data: { user },
@@ -151,7 +151,7 @@ export const deleteUser = async (req, res, next) => {
     if (!user) {
       handleError(res, 404, "User not found");
     }
-    res.status(204).json({
+    return res.status(204).json({
       status: "success",
       message: "User deleted successfully",
       data: null,
