@@ -29,6 +29,7 @@ const orderSchema = new Schema(
       required: true,
     },
     shippingAddress: {
+      name: { type: String, required: true, default: "John Doe", trim: true },
       street: { type: String, required: true },
       city: { type: String, required: true },
       state: { type: String, required: true },
